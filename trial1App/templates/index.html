@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>marpleSim CAD</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel ="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <script type="text/javascript" src="https://unpkg.com/@babel/polyfill@7.0.0/dist/polyfill.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vtk.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>marpoleSim CAD</h1>
+    </header>
+
+    <main>
+    <section>
+    <div class="row">
+      <div class="column" style="background-color:#aaa;">  <!-- column 1: input column -->
+        <div style="padding: 10px;">
+        <h2>Adjust Hole Position and Diameter</h2>
+              <form class="" id="holeForm" method="post">
+                {% csrf_token %}
+    
+                  <p>Input hole center (x, y)</p>
+                  <div style="margin-top: 10px;">
+                    <label for="x">coordinate x value:</label>
+                    <input type="number" step="0.01" value="0" d="x" name="x"><br>
+                  </div>
+                  <div style="margin-top: 10px;">
+                  <label for="y">coordinate y value:</label>
+                  <input type="number" step="0.01" value="0" id="y" name="y"><br><br>
+                  </div>
+                  <p>Input hole diameter</p>
+                  <label for="y">diameter:</label>
+                  <input type="number" step="0.01" value="10" id="d" name="d"><br><br>
+                  <input type="submit" value="Submit">
+              </form>
+        </div>
+      </div> <!-- column 2: canvas column --> 
+      <div class="column" style="background-color:#bbb;">
+              <div id="vtkContainer" style="padding: 0px;"></div>
+      </div>
+      <div class="column" style="background-color:#ccc;">
+         <div style="margin-left:10px;">
+           <h2>Instructions</h2>
+            <ul>
+              <li>plane rotate: ctrl + mouse left button</li>
+              <li>3D rotate: mouse left button</li>
+              <li>pan: shift + mouse left button</li>
+              <li>zoom: mouse wheel</li>
+              <li>reset camera: click reset camera button below</li>
+            </ul> 
+            <form class="" id="resetForm" method="post">
+                {% csrf_token %}
+                  <input type="submit" value="Reset Camera">
+            </form>
+         </div>
+      </div>
+      {{vtpPath}}
+     
+    </div>  <!-- end of row>
+    </section>
+    </main>
+
+    <div class="footer">
+      <p> <b>marpoleSim</b> 2025, all rights reserved</p>
+    </div>
+
+    <!-- vtkFunc.js is for rendering the vtp file -->
+    <script type="module" src="{% static 'js/vtkFunc.js' %}"> </script>
+
+    <!-- jquery function for response -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="{% static 'js/main.js' %}"> </script>
+
+  </body>
+</html>
