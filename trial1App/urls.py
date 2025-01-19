@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
 	path('', views.trial, name='home'), 
-	path('setHole', views.setHole, name='setHole'), 
+	path('modelling', views.modelling, name='modelling'), 
 ]

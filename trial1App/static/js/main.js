@@ -1,41 +1,36 @@
-import { renderer, renderWindow, reader, actor, mapper } from '/static/js/vtkFunc.js';
-
-function reset(data) {
-
-    renderer.resetCamera();
-    renderWindow.render();
-}
-
-function renderVtk(data) {
-
-    let vtpsrc = `${data.vtpURLPath}/simpleBlock.vtp`;    
-    reader.setUrl(vtpsrc);
-    reader.loadData();
-    mapper.setInputConnection(reader.getOutputPort());
-    actor.setMapper(mapper);
-    renderWindow.render();
-}
+import { init, load, zoomAll, } from '/static/js/vtkFunc.js';
 
 $(function () {
 
    // respond to geometry modification
-   $('#holeForm').on('submit', function (event) {
+   $('#parameterForm').on('submit', function (event) {
       event.preventDefault();
       $.ajax({
-         url: 'setHole',
+         url: 'modelling',
          type: 'POST',
          data: $(this).serialize(),
          dataType: 'json',
          success: function (response) {
-            renderVtk(response);
          }
       });
    });
 
-   // respond to resetting visualization
-   $('#resetForm').on('submit', function (event) {
+   // respond to initialize visualization
+   $('#initForm').on('submit', function (event) {
       event.preventDefault();
-      reset();
+      init();
+   });
+
+   // respond to initialize visualization
+   $('#loadForm').on('submit', function (event) {
+      event.preventDefault();
+      load();
+   });
+
+   // respond to resetting visualization
+   $('#zoomAllForm').on('submit', function (event) {
+      event.preventDefault();
+      zoomAll();
    });
 
 });
