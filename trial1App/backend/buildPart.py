@@ -1,5 +1,5 @@
-import trial1App.backend.partlib.partlib as pl
 from cadquery import exporters
+import trial1App.backend.partlib.partlib as pl
 
 def savePartVtp(obj, partName, vtpPath):
 
@@ -8,13 +8,26 @@ def savePartVtp(obj, partName, vtpPath):
 
     return filename
 
-def buildPart(partName, functionName, arg, vtpPath):
+def savePartStl(obj, partName, stlPath):
 
-    # function name is used here for select function
-    obj = pl.rectanglePlate( arg )
-
-    # all model should be saved in vtp format for review
-    filename = savePartVtp(obj, partName, vtpPath)
+    filename = str(stlPath) + '/' + partName + ".stl"
+    exporters.export(obj, filename)
 
     return filename
+
+def buildPart(partName, functionName, arg, mediaPath):
+
+    # function name is used here for select function
+    flag = True
+    try:
+       obj = getattr(pl, functionName)( arg )
+    except:
+       flag = False
+
+    # all model should be saved in vtp format for review
+    if flag:
+        savePartVtp(obj, partName, mediaPath)
+        #savePartStl(obj, partName, mediaPath)
+
+    return flag 
 

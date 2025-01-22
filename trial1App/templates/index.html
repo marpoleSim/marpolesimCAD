@@ -19,51 +19,65 @@
     <div class="row">
       <div class="column-side" style="background-color:#aaa;">  <!-- column 1: input column -->
         <div style="padding: 10px;">
-        <h2>Rectangle Plate Parameters</h2>
-              <form class="" id="parameterForm" method="post">
-                {% csrf_token %}
-                  <div style="margin-top: 10px;">
-                    <label for="arg0">Length (mm): </label>
-                    <input type="number" step="0.01" value="80" id="arg0" name="arg0"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg1">Height (mm): </label>
-                    <input type="number" step="0.01" value="60" id="arg1" name="arg1"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg2">Thickness (mm):</label>
-                    <input type="number" step="0.01" value="20" id="arg2" name="arg2"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg3"></label>
-                    <input type="number" step="0.01" value="0" id="arg3" name="arg3"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg4"></label>
-                    <input type="number" step="0.01" value="0" id="arg4" name="arg4"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg5"></label>
-                    <input type="number" step="0.01" value="0" id="arg5" name="arg5"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg6"></label>
-                    <input type="number" step="0.01" value="0" id="arg6" name="arg6"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg7"></label>
-                    <input type="number" step="0.01" value="0" id="arg7" name="arg7"><br>
-                  </div>
-                  <div style="margin-top: 10px;">
-                    <label for="arg8"></label>
-                    <input type="number" step="0.01" value="0" id="arg8" name="arg8"><br>
-                  </div>
-                  <input type="submit" value="Submit" style="margin-top: 10px;">
-              </form>
+          <h3>Select Part</h3>
+          <form class="" id="selectPartForm" method="post">
+          {% csrf_token %}
+              <label for="selectPart" class="">part list: </label>
+              <select class="" name="selectPart" id="selectPart" required autocomplete='off'>
+                <option disabled selected value>Choose a part...</option>
+                {% for partName in inputList %}
+                <option value={{ partName }}>{{ partName }}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <input id='select' type="submit" value="Select" style="margin-top: 10px;">
+          </form>
         </div>
+        <hr>
+
+        <div style="padding: 10px;">
+            <h3>Set Up Parameter(s)</h3>
+            <div id="parameterTitle" style="display:none;">
+            </div>
+            <form class="" id="parameterForm" method="post">
+              {% csrf_token %}
+                {% for i in '012345678'|make_list %}
+                <div id='arg{{ forloop.counter }}' style="margin-top: 10px; display: none">
+                  <label id="argname{{ forloop.counter}}" for="argname{{ forloop.counter }}">dummy: </label>
+                  <input type="number" step="0.01" value="0" id="argvalue{{ forloop.counter}}" name="argvalue{{ forloop.counter }}"><br>
+                </div>
+                {% endfor %}
+                <input id='argsubmit' type="submit" value="Submit" style="margin-top: 10px;">
+                <div id='status'></div>
+            </form>
+        </div>
+        <hr>
+
+        <div style="padding: 10px;">
+            <h3>Display Part</h3>
+            <form class="" id="loadForm" method="post">
+                {% csrf_token %}
+                  <input id='load' type="submit" value="Display">
+            </form>
+        </div>
+        <hr>
+
+        <div style="padding: 10px;">
+            <h3>Save</h3>
+            <form class="" id="saveForm" method="post">
+                {% csrf_token %}
+                  <label for="newPartName">new part name: </label>
+                  <input type="text" value="" id="newPartName" name="newPartName" oninput="this.value = this.value.replace(/\s/g, '')"><br><br>
+                  <input id='savePart' type="submit" value="Save">
+                  <div id='partNameMessage'></div>
+            </form>
+        </div>
+
       </div> <!-- column 2: canvas column --> 
       <div class="column-middle" style="background-color:#bbb;">
+              <div>
               <div id="vtkContainer" style="padding: 0px;"></div>
+              </div>
       </div>
       <div class="column-side" style="background-color:#ccc;">
          <div style="margin-left:10px;">
@@ -80,14 +94,6 @@
                   <input type="submit" value="zoomAll">
             </form>
             <hr>
-            <form class="" id="initForm" method="post">
-                {% csrf_token %}
-                  <input type="submit" value="Initialization">
-            </form>
-            <form class="" id="loadForm" method="post">
-                {% csrf_token %}
-                  <input type="submit" value="Load">
-            </form>
          </div>
       </div>
       {{vtpPath}}

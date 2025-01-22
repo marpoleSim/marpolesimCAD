@@ -28,10 +28,11 @@ export function load(data){
     // ---
     // vtk pipeline source --> mapper --> actor
     // ---
-      
+
     // source
-    let simpleBlocksrc = '/media/trial1/myPart.vtp';  
-    reader.setUrl(simpleBlocksrc).then(() => {
+    let partname = Object.values(data)[0];
+    let vtpsrc = '/media/trial1/' + partname + '.vtp';  
+    reader.setUrl(vtpsrc).then(() => {
         reader.loadData().then(() => {
     
           zoomAll();
@@ -58,5 +59,12 @@ export function zoomAll(data) {
 
     renderer.resetCamera();
     renderWindow.render();
+}
+
+export function clearDisplay(data) {
+
+    renderer.removeActor(actor);
+    renderWindow.render();
+
 }
 
