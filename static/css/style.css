@@ -30,6 +30,20 @@ header h1 {
   height: 640px;
 }
 
+.column-side {
+  float: left;
+  width: 30%;
+  padding: 0px;
+  height: 768px;
+}
+
+.column-middle {
+  float: left;
+  width: 40%;
+  padding: 0px;
+  height: 768px;
+}
+
 /* Clear floats after the columns */
 .row:after {
   content: "";

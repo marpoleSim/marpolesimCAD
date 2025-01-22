@@ -1,42 +1,70 @@
-// ----
-// standard rendering code setup
-// ---
+let vtkRenderScreen;
+let renderer;
+let renderWindow;
 
-const vtkRenderScreen = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
-container: document.querySelector('#vtkContainer'), background: [0.2, 0.3, 0.4] });
+let reader;
+let mapper;
+let actor;
 
-export var renderer = vtkRenderScreen.getRenderer();
-export var renderWindow = vtkRenderScreen.getRenderWindow();
-  
-// ---
-// vtk pipeline source --> mapper --> actor
-// ---
-  
-// source
-export const reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+export function init(data){
 
-let simpleBlocksrc = '/media/trial1/simpleBlock.vtp';  
-reader.setUrl(simpleBlocksrc).then(() => {
-    reader.loadData().then(() => {
+    // ----
+    // standard rendering code setup
+    // ---
+    vtkRenderScreen = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
+        container: document.querySelector('#vtkContainer'), background: [0.2, 0.3, 0.4] });
+    renderer = vtkRenderScreen.getRenderer();
+    renderWindow = vtkRenderScreen.getRenderWindow();
+      
+    // ---
+    // create instances
+    // ---
+    reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+    mapper   = vtk.Rendering.Core.vtkMapper.newInstance();
+    actor    = vtk.Rendering.Core.vtkActor.newInstance();
+}
 
-      renderer.resetCamera();
-      renderWindow.render();
-  });
-}); 
+export function load(data){
+    // ---
+    // vtk pipeline source --> mapper --> actor
+    // ---
 
-// ---
-// mapper
-// ---
-export var mapper             = vtk.Rendering.Core.vtkMapper.newInstance();
-mapper.setInputConnection(reader.getOutputPort());
+    // source
+    let partname = Object.values(data)[0];
+    let vtpsrc = '/media/trial1/' + partname + '.vtp';  
+    reader.setUrl(vtpsrc).then(() => {
+        reader.loadData().then(() => {
+    
+          zoomAll();
+      });
+    }); 
+    
+    // ---
+    // mapper
+    // ---
+    mapper.setInputConnection(reader.getOutputPort());
+    
+    // ---
+    // actor
+    // ---
+    actor.setMapper(mapper);
+    
+    // ---
+    // add the actor to the render
+    // ---
+    renderer.addActor(actor);
+}
 
-// ---
-// actor
-// ---
-export var actor              = vtk.Rendering.Core.vtkActor.newInstance();
-actor.setMapper(mapper);
+export function zoomAll(data) {
 
-// ---
-// add the actor to the render
-// ---
-renderer.addActor(actor);
+    renderer.resetCamera();
+    renderWindow.render();
+}
+
+export function clearDisplay(data) {
+
+    renderer.removeActor(actor);
+    renderWindow.render();
+
+}
+
