@@ -1,4 +1,4 @@
-import { init, load, clearDisplay, zoomAll, } from '/static/js/vtkFunc.js';
+import { init, display, zoomAll, } from '/static/js/vtkFunc.js';
 import { showParameter, } from '/static/js/html.js';
 
 $(function () {
@@ -7,7 +7,6 @@ $(function () {
 
       // enabling and disabling buttons
       $('#argsubmit').attr('disabled','disabled');
-      $('#load').attr('disabled','disabled');
       $('#savePart').attr('disabled','disabled');
 
       // initialize window
@@ -24,12 +23,8 @@ $(function () {
 
       // enabling and disabling buttons
       $('#select').attr('disabled','disabled');
-      $('#load').attr('disabled','disabled');
       $('#savePart').attr('disabled','disabled');
  
-      // clear display area
-      clearDisplay()           
-
       // display status
       document.getElementById('status').innerHTML = '<p>status: proceeding ... </p>';
       $('#status').show();
@@ -42,37 +37,17 @@ $(function () {
          success: function (response) {
              // display proceeding status
              if (response.flag) {
+                $('#savePart').removeAttr('disabled');
                 document.getElementById('status').innerHTML = '<p>status: complete </p>';
-                $('#load').removeAttr('disabled');
+
+                var partname = response.partName;
+                var data = {'partname': partname}
+                display(data);
              } else {
                 document.getElementById('status').innerHTML = '<p>status: failed to make part, adjust parameter(s). </p>';
-                $('#load').attr('disabled','disabled');
              }
          }
       });
-   });
-
-   // respond to load file to display 
-   $('#loadForm').on('submit', function (event) {
-      event.preventDefault();
-
-      $('#savePart').removeAttr('disabled');
-
-      // add selectpartForm input to the current load form so we 
-      // know what is the part name
-      $.each ( $('#selectPartForm select').serializeArray(), function ( i, obj ) {
-          $('<input type="hidden">').prop( obj ).appendTo( $('#loadForm') );
-      } );
-
-      // to get object of select item
-      var partname = $('#selectPartForm select').serializeArray()[0].value;
-      var data = {'partname': partname}
-
-      // load data to screen 
-      load(data);
-
-      // hide status
-      $('#status').hide();
    });
 
    // respond to resetting visualization
@@ -111,7 +86,6 @@ $(function () {
       // enabling and disabling buttons
       $('#select').removeAttr('disabled');
       $('#argsubmit').attr('disabled','disabled');
-      $('#load').attr('disabled','disabled');
       $('#savePart').attr('disabled','disabled');
 
       // hide parameter title and inputs
@@ -137,7 +111,6 @@ $(function () {
 
       // enabling and disabling buttons
       $('#select').attr('disabled','disabled');
-      $('#load').attr('disabled','disabled');
       $('#savePart').attr('disabled','disabled');
  
       // display status

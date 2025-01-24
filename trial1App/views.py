@@ -48,7 +48,7 @@ def modelling(request):
          arg[i] = float(request.POST.get('argvalue'+str(i+1)))
        
        flag = bp.buildPart(partName, functionName, arg, vtpRootPath)
-       data = {'flag': flag}
+       data = {'flag': flag, 'partName': partName,}
        return JsonResponse(data)
 
 def savePart(request):

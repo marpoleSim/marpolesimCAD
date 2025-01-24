@@ -22,37 +22,53 @@ export function init(data){
     reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
     mapper   = vtk.Rendering.Core.vtkMapper.newInstance();
     actor    = vtk.Rendering.Core.vtkActor.newInstance();
-}
 
-export function load(data){
     // ---
     // vtk pipeline source --> mapper --> actor
     // ---
 
     // source
-    let partname = Object.values(data)[0];
-    let vtpsrc = '/media/trial1/' + partname + '.vtp';  
+    let vtpsrc = '/media/trial1/mCAD.vtp'
     reader.setUrl(vtpsrc).then(() => {
         reader.loadData().then(() => {
-    
+
           zoomAll();
       });
-    }); 
-    
+    });
+
     // ---
     // mapper
     // ---
     mapper.setInputConnection(reader.getOutputPort());
-    
+
     // ---
     // actor
     // ---
     actor.setMapper(mapper);
-    
+    actor.getProperty().setColor(1, 0.6, 0.2);
+
     // ---
     // add the actor to the render
     // ---
     renderer.addActor(actor);
+
+    // slightly adjust camera angles
+    renderer.getActiveCamera().azimuth(20);
+    renderer.getActiveCamera().pitch(-10);
+
+}
+
+export function display(data){
+
+    // load data and display
+    let partname = Object.values(data)[0];
+    let vtpsrc = '/media/trial1/' + partname + '.vtp';  
+    reader.setUrl(vtpsrc).then(() => {
+        reader.loadData().then(() => {
+          actor.getProperty().setColor(0.78, 0.80, 0.81);  // aluminium color
+          zoomAll();
+      });
+    }); 
 }
 
 export function zoomAll(data) {
