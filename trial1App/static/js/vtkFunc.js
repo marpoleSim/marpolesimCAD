@@ -61,12 +61,15 @@ export function init(data){
 export function display(data){
 
     // load data and display
-    let partname = Object.values(data)[0];
+    let partname = data.partname;
     let vtpsrc = '/media/trial1/' + partname + '.vtp';  
     reader.setUrl(vtpsrc).then(() => {
         reader.loadData().then(() => {
           actor.getProperty().setColor(0.78, 0.80, 0.81);  // aluminium color
-          zoomAll();
+          if (data.saveButton) {
+             renderer.resetCamera();
+          }
+          renderWindow.render();
       });
     }); 
 }

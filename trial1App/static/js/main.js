@@ -23,7 +23,6 @@ $(function () {
 
       // enabling and disabling buttons
       $('#select').attr('disabled','disabled');
-      $('#savePart').attr('disabled','disabled');
  
       // display status
       document.getElementById('status').innerHTML = '<p>status: proceeding ... </p>';
@@ -37,14 +36,27 @@ $(function () {
          success: function (response) {
              // display proceeding status
              if (response.flag) {
+
+                let savePartButton;
+                if(document.getElementById('savePart').disabled){
+                   savePartButton = true;
+                } else {
+                   savePartButton = false;
+                }
+
+                var partname = response.partName;
+
+                var data = {'partname': partname, 'saveButton': savePartButton}
+
+                display(data);
+
                 $('#savePart').removeAttr('disabled');
                 document.getElementById('status').innerHTML = '<p>status: complete </p>';
 
-                var partname = response.partName;
-                var data = {'partname': partname}
-                display(data);
              } else {
+
                 document.getElementById('status').innerHTML = '<p>status: failed to make part, adjust parameter(s). </p>';
+
              }
          }
       });
@@ -96,9 +108,6 @@ $(function () {
               id = (i+1).toString();
               $('#arg' + id).hide();
       }
-
-      $('#partNameMessage').hide();
-   
    });
 
    // respond to geometry modification
