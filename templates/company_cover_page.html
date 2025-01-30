@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+  <header>
+    <h1>mCAD (A Parametric Model)</h1>
+  </header>
+{% endblock %}
+
+{% block menu %}
+  <div class="topnav">
+   <a class="active" href="/home">Home</a>
+   <!-- <a href="#about">About</a> -->
+   <!-- <a href="#contact">Contact</a> -->
+   <div class="search-container"> 
+     <form action="{% url 'logout' %}" method="post">
+       {% csrf_token %}
+       <button type="submit">Log Out</button>
+     </form>
+   </div>
+  </div>
+{% endblock %}
+
+{% block middleContent %}
+  <div class="center" style="margin-top: 40px;">
+    <form class="" id="companyReviewOrder" method="post" action='company_review_order'>
+    {% csrf_token %}
+       <p>1. Review order. </p>
+       <input id='submitOrder' type="submit" value="review order">
+    </form>
+  </div>
+{% endblock %}
+

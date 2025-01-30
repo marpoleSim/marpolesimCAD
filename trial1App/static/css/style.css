@@ -190,5 +190,19 @@ li.menu a:hover {
 }
 
 /* order review table */
+/*table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}*/
+
+.bordered {
+    border: 1px solid black;
+    font-size: 13px; 
+}
+
+.bordered th, .bordered td {
+    border: 1px solid black;
+    padding: 8px;
+}
 
 .centerTable { margin: 0px auto; }

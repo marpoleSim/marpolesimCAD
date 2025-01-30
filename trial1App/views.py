@@ -195,25 +195,45 @@ def submit_order(request):
 
 def user_review_order(request):
 
-    #get user
     user = request.user
-
-    #search order table
     orders = Order.objects.filter(user = user)
     
-    #get a list
-    #find part, date, 
     orderIDList = []
     orderPartNameList = []
     orderCompanyList = []
+    orderEmailList = []
     orderDateList = []
 
     for order in orders: 
         orderIDList.append( order.id+10000 )
         orderPartNameList.append(order.part.partName)
         orderCompanyList.append(order.company.company)
+        orderEmailList.append(order.company.user.email)
         orderDateList.append(order.orderDate.strftime('%Y-%m-%d %H:%M'))
 
-    orderList = list(zip(orderIDList, orderPartNameList, orderCompanyList, orderDateList,))    
+    orderList = list(zip(orderIDList, orderPartNameList, orderCompanyList, orderEmailList, orderDateList,))    
  
     return render(request, 'user_review_order.html', {'orderList': orderList} )
+
+def company_review_order(request):
+
+    user = request.user
+    company = CompanyInfo.objects.filter(user = user)[0]
+    orders = Order.objects.filter(company = company)
+    
+    orderIDList = []
+    orderPartNameList = []
+    orderUserList = []
+    orderUserEmailList = []
+    orderDateList = []
+
+    for order in orders: 
+        orderIDList.append( order.id+10000 )
+        orderPartNameList.append(order.part.partName)
+        orderUserList.append(order.user.username)
+        orderUserEmailList.append(order.user.email)
+        orderDateList.append(order.orderDate.strftime('%Y-%m-%d %H:%M'))
+
+    orderList = list(zip(orderIDList, orderPartNameList, orderUserList, orderUserEmailList, orderDateList,))    
+ 
+    return render(request, 'company_review_order.html', {'orderList': orderList} )

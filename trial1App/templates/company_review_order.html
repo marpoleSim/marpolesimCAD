@@ -27,11 +27,11 @@
        <h2>Order Review</h2>
    <table class="bordered centerTable">
    <tr>
-         <th>order id</th> <th>partname</th> <th>company</th> <th>email</th> <th>order time</th> 
+         <th>order id</th> <th>partname</th> <th>username</th> <th>user email</th> <th>order time</th> 
    </tr>
-   {% for id, partname, company, email, order_date in orderList %} 
+   {% for id, partname, username, email, order_date in orderList %} 
          <tr>
-         <td>{{id}}</td> <td>{{partname}}</td> <td>{{company}}</td> <td>{{email}} </td> <td>{{order_date}}</td> 
+         <td>{{id}}</td> <td>{{partname}}</td> <td>{{username}}</td> <td>{{email}}</td> <td>{{order_date}}</td> 
          </tr>
    {% endfor %}
    </table>

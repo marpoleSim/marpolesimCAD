@@ -7,7 +7,7 @@ def home(request):
     if request.user.is_authenticated:
       userType = UserType.objects.get(user = request.user)
       if userType.isCompany:
-        return redirect('reviewOrder')
+        return redirect('company_cover_page')
       else:
         return redirect('user_cover_page')
     else:
@@ -16,3 +16,7 @@ def home(request):
 def user_cover_page(request):
 
     return render(request, 'user_cover_page.html')
+
+def company_cover_page(request):
+
+    return render(request, 'company_cover_page.html')
