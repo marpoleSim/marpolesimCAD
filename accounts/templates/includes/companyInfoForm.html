@@ -1,0 +1,15 @@
+<table class="centerTable">
+{% for field in form %}
+  <tr>
+  <td style="padding: 5px;"><div style="text-align: right;">{{ field.label_tag }}</div></td>
+  <td style="padding: 5px;">{{ field }}</td>
+  </tr>
+{% endfor %}
+
+{% for field in companyInfoForm %}
+  <tr>
+  <td style="padding: 5px;"><div style="text-align: right;">{{ field.label_tag }}</div></td>
+  <td style="padding: 5px;">{{ field }}</td>
+  </tr>
+{% endfor %}
+</table>

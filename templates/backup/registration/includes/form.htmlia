@@ -1,0 +1,8 @@
+<table class="centerTable">
+{% for field in form %}
+  <tr>
+  <td><div style="text-align: right;">{{ field.label_tag }}</div></td>
+  <td>{{ field }}</td>
+  </tr>
+{% endfor %}
+</table>

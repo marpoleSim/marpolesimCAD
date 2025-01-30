@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>mCAD</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel ="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  </head>
+  <body>
+
+<ul>
+  <li><a href="#home">Home</a></li>
+  <li><a href="#company">Logout</a></li>
+</ul>
+    <header>
+      <h1>mCAD (A Parametric Model)</h1>
+    </header>
+
+    <main>
+    <section>
+    <div class="row">
+      <div class="column-side" style="background-color:#aaa;">  <!-- column 1: input column -->
+      </div> <!-- column 2: canvas column --> 
+      <div class="column-middle" style="background-color:#bbb;">
+              <div class="center">
+              <p>User Login</p>
+              <img style="margin-top: 150px;" src="{% static 'img/coverpage.png' %}" alt="mCAD"> 
+              </div>
+      </div>
+      <div class="column-side" style="background-color:#ccc;">
+      </div>
+    </div>  <!-- end of row -->
+    </section>
+    </main>
+
+    <div class="footer">
+      <p> <b>marpoleSim</b> 2025, all rights reserved</p>
+    </div>
+
+  </body>
+</html>

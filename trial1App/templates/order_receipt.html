@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+  <header>
+    <h1>mCAD (A Parametric Model)</h1>
+  </header>
+{% endblock %}
+
+{% block menu %}
+<div class="topnav">
+   <a class="active" href="/home">Home</a>
+   <!-- <a href="#about">About</a> -->
+   <!-- <a href="#contact">Contact</a> -->
+   <div class="search-container"> 
+     <form action="{% url 'logout' %}" method="post">
+       {% csrf_token %}
+       <button type="submit">Log Out</button>
+     </form>
+   </div>
+</div>
+{% endblock %}
+
+{% block middleContent %}
+   <p> Order Number: {{ order_id }}</p>
+   <br>
+   <p> Order Data: {{ order_time }}</p>
+   <br>
+   <p> User Name: {{ user_name }}</p>
+   <br>
+   <p> Company Name: {{ company_name }}</p>
+   <br>
+   <p> Part Name: {{ part_name }}</p>
+   <br>
+   <p> Part Parameter(s): </p>
+   {% for argname, argvalue in parameterList %} 
+       <div style="margin-top: 10px;">
+         {{argname}}: {{argvalue}} 
+       </div>
+   {% endfor %}
+{% endblock %}
+
+{% block script %}
+{% endblock %}

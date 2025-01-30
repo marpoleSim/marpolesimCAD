@@ -62,12 +62,14 @@ export function display(data){
 
     // load data and display
     let partname = data.partname;
+    let submitOrderButton = data.submitOrderButton;
+
     let vtpsrc = '/media/trial1/' + partname + '.vtp';  
     reader.setUrl(vtpsrc).then(() => {
         reader.loadData().then(() => {
           actor.getProperty().setColor(0.78, 0.80, 0.81);  // aluminium color
-          if (data.saveButton) {
-             renderer.resetCamera();
+          if (submitOrderButton) {
+              renderer.resetCamera();
           }
           renderWindow.render();
       });

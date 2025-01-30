@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+  <header>
+    <h1>mCAD (A Parametric Model)</h1>
+  </header>
+{% endblock %}
+
+{% block menu %}
+<div class="topnav">
+   <a class="active" href="/home">Home</a>
+   <!-- <a href="#about">About</a> -->
+   <!-- <a href="#contact">Contact</a> -->
+   <div class="search-container"> 
+     <form action="{% url 'logout' %}" method="post">
+       {% csrf_token %}
+       <button type="submit">Log Out</button>
+     </form>
+   </div>
+</div>
+{% endblock %}
+
+{% block middleContent %}
+  <div class="container" style="margin: 20px;">
+    <div style="text-align: center;">
+       <h2>Select a Part</h2>
+       <hr>
+       <h3>Step 2. Select a part</h3>
+       <form name="selectPartForm" id="selectPartForm" method='post' action='trial' >
+       {% csrf_token %}
+       <select class="form-select" name="partList" id="partList" required autocomplete='off'>
+        <option disabled selected value>Select a part...</option>
+        {% for value in partList %}
+        <option value='{{value}}'>{{value}}</option>
+        {% endfor %}
+       </select>
+
+       <input style="margin: 20px;" type="submit" value="Select">
+       </form> 
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <!-- jquery function for response -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+  <!-- <script type="module" src="{% static 'js/selectParts.js' %}"> </script> -->
+{% endblock %}

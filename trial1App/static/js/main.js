@@ -6,8 +6,8 @@ $(function () {
    $(document).ready(function(){
 
       // enabling and disabling buttons
-      $('#argsubmit').attr('disabled','disabled');
-      $('#savePart').attr('disabled','disabled');
+      //$('#argsubmit').attr('disabled','disabled');
+      $('#submitOrder').attr('disabled','disabled');
 
       // initialize window
       init();
@@ -17,13 +17,6 @@ $(function () {
    $('#parameterForm').on('submit', function (event) {
       event.preventDefault();
 
-      $.each ( $('#selectPartForm select').serializeArray(), function ( i, obj ) {
-          $('<input type="hidden">').prop( obj ).appendTo( $('#parameterForm') );
-      } );
-
-      // enabling and disabling buttons
-      $('#select').attr('disabled','disabled');
- 
       // display status
       document.getElementById('status').innerHTML = '<p>status: proceeding ... </p>';
       $('#status').show();
@@ -37,20 +30,21 @@ $(function () {
              // display proceeding status
              if (response.flag) {
 
-                let savePartButton;
-                if(document.getElementById('savePart').disabled){
-                   savePartButton = true;
-                } else {
-                   savePartButton = false;
-                }
-
                 var partname = response.partName;
 
-                var data = {'partname': partname, 'saveButton': savePartButton}
+                let submitOrderButton;
+                if(document.getElementById('submitOrder').disabled){
+                   submitOrderButton = true;
+                } else {
+                   submitOrderButton = false;
+                }
+
+                var data = {'partname': partname, 'submitOrderButton': submitOrderButton, }
 
                 display(data);
 
-                $('#savePart').removeAttr('disabled');
+                $('#submitOrder').removeAttr('disabled');
+
                 document.getElementById('status').innerHTML = '<p>status: complete </p>';
 
              } else {
@@ -111,38 +105,38 @@ $(function () {
    });
 
    // respond to geometry modification
-   $('#saveForm').on('submit', function (event) {
+   /*
+   $('#submitOrderForm').on('submit', function (event) {
       event.preventDefault();
 
       $.each ( $('#parameterForm input').serializeArray(), function ( i, obj ) {
-          $('<input type="hidden">').prop( obj ).appendTo( $('#saveForm') );
+          $('<input type="hidden">').prop( obj ).appendTo( $('#submitOrderForm') );
       } );
 
-      // enabling and disabling buttons
-      $('#select').attr('disabled','disabled');
-      $('#savePart').attr('disabled','disabled');
- 
-      // display status
-      document.getElementById('partNameMessage').innerHTML = '<p>status: proceeding ... </p>';
-      $('#partNameMessage').show();
-
       $.ajax({
-         url: 'savePart',
+         url: 'submit_order',
          type: 'POST',
          data: $(this).serialize(),
          dataType: 'json',
          success: function (response) {
-             // display proceeding status
-             if (response.flag) {
-                document.getElementById('partNameMessage').innerHTML = '<p>status: part is saved </p>';
-                $('#savePart').attr('disabled','disabled');
-                $('#argsubmit').attr('disabled','disabled');
-             } else {
-                document.getElementById('partNameMessage').innerHTML = '<p>status: the name exists. change name. </p>';
-                $('#savePart').removeAttr('disabled');
-             }
+             window.location.replace('order_receipt', response);
          }
       });
+   });
+   */
+   $('#submitOrderForm').on('submit', function (event) {
+      event.preventDefault();
+      document.getElementById("partnameB").value = document.getElementById("partname").value;
+
+      let arg_value_1;
+      let arg_value_2;
+      for( let i = 1; i < 10; i++) {
+          arg_value_1 = 'argvalue' + (i).toString();
+          arg_value_2 = 'argvalueB' + (i).toString();
+          document.getElementById(arg_value_2).value = document.getElementById(arg_value_1).value;
+      }
+      
+      document.getElementById("submitOrderForm").submit();
    });
 
 });
