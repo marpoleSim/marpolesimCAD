@@ -101,7 +101,7 @@ def savePart(request):
        data = {'flag': flag}
        return JsonResponse(data)
 
-def selectPart(request):
+def select_company(request):
 
     objs = CompanyInfo.objects.all() 
     objList = list(objs.values())
@@ -109,7 +109,7 @@ def selectPart(request):
 
     return render(request, 'selectCompany.html', {'companyList': companyList, })
 
-def select_company(request):
+def select_companyB(request):
 
     if request.method == 'POST':
        companyName = request.POST.get('companyList')
@@ -193,6 +193,27 @@ def submit_order(request):
 
     return render(request, 'order_receipt.html', data)
 
-def reviewOrder(request):
+def user_review_order(request):
+
+    #get user
+    user = request.user
+
+    #search order table
+    orders = Order.objects.filter(user = user)
+    
+    #get a list
+    #find part, date, 
+    orderIDList = []
+    orderPartNameList = []
+    orderCompanyList = []
+    orderDateList = []
+
+    for order in orders: 
+        orderIDList.append( order.id+10000 )
+        orderPartNameList.append(order.part.partName)
+        orderCompanyList.append(order.company.company)
+        orderDateList.append(order.orderDate.strftime('%Y-%m-%d %H:%M'))
+
+    orderList = list(zip(orderIDList, orderPartNameList, orderCompanyList, orderDateList,))    
  
-    return render(request, 'reviewOrder.html')
+    return render(request, 'user_review_order.html', {'orderList': orderList} )

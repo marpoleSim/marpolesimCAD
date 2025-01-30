@@ -9,7 +9,10 @@ def home(request):
       if userType.isCompany:
         return redirect('reviewOrder')
       else:
-        return redirect('selectPart')
+        return redirect('user_cover_page')
     else:
         return render(request, 'coverPage.html')
 
+def user_cover_page(request):
+
+    return render(request, 'user_cover_page.html')

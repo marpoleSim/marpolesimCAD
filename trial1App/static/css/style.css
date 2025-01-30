@@ -188,3 +188,7 @@ li.menu a:hover {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* order review table */
+
+.centerTable { margin: 0px auto; }
