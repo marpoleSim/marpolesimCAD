@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.conf import settings as django_settings
 from django.http import FileResponse
 from django.forms.models import model_to_dict
+import re
 
 import trial1App.backend.buildPart as bp 
 
@@ -36,7 +37,9 @@ def geomParameter(request):
     partDict = list(part)[0] 
     numberOfArgs = partDict['numberOfArgs']
     #functionName = partDict['functionName']
-    functionName = partName
+    #functionName = partName.strip().replace(" ","_")
+    functionName = re.sub(r"\s+", "_", partName.strip()).lower()
+    print(functionName)
   
     argName=[None]*numberOfArgs 
     argValue=[None]*numberOfArgs 
@@ -53,7 +56,8 @@ def modelling(request):
        partName = request.POST.get('partname')
        #part = Part.objects.filter(partName = partName).values() 
        #functionName = list(part)[0]['functionName']
-       functionName = partName
+       #functionName = partName
+       functionName = re.sub(r"\s+", "_", partName.strip()).lower()
        vtpRootPath = str(django_settings.MEDIA_ROOT) + '/trial1'
 
        args = request.POST.getlist('argvalue')

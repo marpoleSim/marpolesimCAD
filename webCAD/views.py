@@ -20,3 +20,11 @@ def user_cover_page(request):
 def company_cover_page(request):
 
     return render(request, 'company_cover_page.html')
+
+def about(request):
+
+    return render(request, 'about.html')
+
+def contact(request):
+
+    return render(request, 'contact.html')

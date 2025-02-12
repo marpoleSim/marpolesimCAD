@@ -13,6 +13,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home', views.home, name="home"),  
+    path('about', views.about, name="about"),  
+    path('contact', views.contact, name="contact"),  
     path('user_cover_page', views.user_cover_page, name="user_cover_page"),  
     path('company_cover_page', views.company_cover_page, name="company_cover_page"),  
     path('', views.home, name="home"),  

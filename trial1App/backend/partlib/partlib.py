@@ -26,7 +26,7 @@ def sphere(arg):
 
     return obj
 
-def plateWithHole(arg):
+def plate_with_hole(arg):
 
     length = arg[0]
     height = arg[1]
@@ -62,7 +62,7 @@ def tee(arg):
 
     return obj
 
-def boxWithFillet(arg):
+def box_with_fillet(arg):
   
     length = arg[0]
     width  = arg[1]
@@ -78,7 +78,7 @@ def boxWithFillet(arg):
 
     return obj
   
-def bearingPillowBlock(arg):
+def bearing_pillow_block(arg):
 
     length     = arg[0]
     height     = arg[1]
@@ -122,7 +122,7 @@ def gear(t, r1=4, r2=1):
     else:
         return hypocycloid(t, r1, r2)
 
-def cycloidalGear(arg): 
+def cycloidal_gear(arg): 
 
     length = arg[0]
     para1  = arg[1]
@@ -212,7 +212,7 @@ def lego(arg):
 
     return tmp
 
-def gearbox(arg):
+def gear_box(arg):
 
     # Diameter of the circle at which a gear meets it's neighbor gear
     # Use this to space out your gears correctly
