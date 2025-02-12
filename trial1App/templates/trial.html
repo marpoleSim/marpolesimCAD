@@ -1,31 +1,26 @@
+{% extends 'base.html' %}
 {% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>mCAD</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel ="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <script type="text/javascript" src="https://unpkg.com/@babel/polyfill@7.0.0/dist/polyfill.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/vtk.js"></script>
-  </head>
-  <body>
-     <div class="topnav">
-        <a class="active" href="home">Home</a>
-        <!-- <a href="#about">About</a> -->
-        <!-- <a href="#contact">Contact</a> -->
-        <div class="search-container"> 
+
+     {% block header %}
+     <header>
+       <h1>mCAD (A Parametric Model)</h1>
+     </header>
+     {% endblock %}
+
+     {% block menu %}
+        <a href="home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <div class="button-container"> 
           <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
             <button type="submit">Log Out</button>
           </form>
         </div>
-      </div> 
-  
-      <main>
-      <section>
-      <div class="row">
-        <div class="column-side" style="background-color:#aaa;">  <!-- column 1: input column -->
+      {% endblock %}
+ 
+        {% block leftContent %} 
           <div style="padding: 10px;">
               <h3>Set Up {{partname}} Parameter(s)</h3>
               <form class="" id="parameterForm" method="post">
@@ -37,17 +32,17 @@
                     <input type="number" step="0.01" value="{{argvalue}}" id="argvalue{{ forloop.counter}}" name="argvalue"><br>
                   </div>
                   {% endfor %}
-                  <input id='argsubmit' type="submit" value="Submit" style="margin-top: 10px;">
+                  <input class='button' id='argsubmit' type="submit" value="Submit" style="margin-top: 20px;">
                   <div id='status'></div>
               </form>
           </div>
-        </div> <!-- column 2: canvas column --> 
-        <div class="column-middle" style="background-color:#bbb;">
+        {% endblock %}
+        {% block middleContent %} 
                 <div>
                 <div id="vtkContainer" style="padding: 0px;"></div>
                 </div>
-        </div>
-        <div class="column-side" style="background-color:#ccc;">
+        {% endblock %}
+        {% block rightContent %} 
            <div style="margin-left:10px;">
              <h2>Instructions</h2>
               <ul>
@@ -60,9 +55,10 @@
               </ul> 
             <form class="" id="zoomAllForm" method="post">
                 {% csrf_token %}
-                  <input type="submit" value="zoomAll">
+                  <input class='button' type="submit" value="zoomAll">
             </form>
-            <hr>
+          </div>
+          <hr>
           <div style="padding: 10px;">
               <h3>Submit Order</h3>
               <form class="" id="submitOrderForm" method="post" action='submit_order'>
@@ -76,24 +72,19 @@
                   <!-- </div> -->
                   {% endfor %}
 
-                    <input id='submitOrder' type="submit" value="Submit Order">
+                    <input class='button' id='submitOrder' type="submit" value="Submit Order">
                     <div id='partNameMessage'></div>
               </form>
           </div>
-           </div>
-        </div>
-       
-      </div>  <!-- end of row -->
-      </section>
-      </main>
+        {% endblock %}
   
-      <div class="footer">
-        <p> <b>marpoleSim</b> 2025, all rights reserved</p>
-      </div>
-  
-      <!-- jquery function for response -->
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script type="module" src="{% static 'js/main.js' %}"> </script>
+      {% block script %}
+        <script type="text/javascript" src="https://unpkg.com/@babel/polyfill@7.0.0/dist/polyfill.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/vtk.js"></script>
+        <!-- jquery function for response -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="module" src="{% static 'js/main.js' %}"> </script>
+      {% endblock %}  
   
   </body>
 </html>

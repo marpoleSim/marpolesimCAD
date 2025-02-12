@@ -18,7 +18,6 @@ def trial(request):
        argName=['dummy']*9
        argValue=[0]*9
        argState=['none']*9 
-
        for i in range(numberOfArgs):
           argName[i] = part['arg' + str(i) + 'Name'] 
           argValue[i] = part['arg' + str(i) + 'Value']
@@ -101,27 +100,13 @@ def savePart(request):
        data = {'flag': flag}
        return JsonResponse(data)
 
-def select_company(request):
+def selectPart(request):
 
     objs = CompanyInfo.objects.all() 
     objList = list(objs.values())
     companyList = [ x['company'] for x in objList]
 
-    return render(request, 'selectCompany.html', {'companyList': companyList, })
-
-def select_companyB(request):
-
-    if request.method == 'POST':
-       companyName = request.POST.get('companyList')
-
-       # search parts
-       company = CompanyInfo.objects.filter(company = companyName)[0]
-       partObjs = Part.objects.filter(company = company)
-       parts = partObjs.values_list('partName', flat=True).distinct()
-       partList = list(parts)
-
-       data = {'partList': partList,}
-       return JsonResponse(data)
+    return render(request, 'selectPart.html', {'companyList': companyList, })
 
 def select_part(request):
 
@@ -132,8 +117,9 @@ def select_part(request):
        parts = partObjs.values_list('partName', flat=True).distinct()
        partList = list(parts)
 
-    return render(request, 'selectPart.html', {'partList': partList, })
+       data = {'partList': partList,}
 
+    return JsonResponse(data)
 
 def submit_order(request):
 
@@ -167,7 +153,7 @@ def submit_order(request):
        new_order.arg8Value = float(argvalueB9)
        new_order.save()
        order_id = 10000 + new_order.id
-       order_time = str(new_order.orderDate)
+       order_time = new_order.orderDate.strftime('%Y-%m-%d %H:%M')
        data = [ order_id, order_time, part_name, company_name, user.username ] 
 
        numberOfArgs = part.numberOfArgs 

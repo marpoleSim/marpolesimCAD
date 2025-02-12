@@ -8,37 +8,28 @@
 {% endblock %}
 
 {% block menu %}
-<div class="topnav">
-   <a class="active" href="/home">Home</a>
-   <!-- <a href="#about">About</a> -->
-   <!-- <a href="#contact">Contact</a> -->
-   <div class="search-container"> 
+   <a href="/home">Home</a>
+   <a href="#about">About</a>
+   <a href="#contact">Contact</a>
+   <div class="button-container"> 
      <form action="{% url 'logout' %}" method="post">
        {% csrf_token %}
        <button type="submit">Log Out</button>
      </form>
    </div>
-</div>
 {% endblock %}
 
 {% block middleContent %}
-   <p> Order Number: {{ order_id }}</p>
-   <br>
-   <p> Order Data: {{ order_time }}</p>
-   <br>
-   <p> User Name: {{ user_name }}</p>
-   <br>
-   <p> Company Name: {{ company_name }}</p>
-   <br>
-   <p> Part Name: {{ part_name }}</p>
-   <br>
-   <p> Part Parameter(s): </p>
+   <p style="margin-top: 50px; font-weight: bold;"> Order Number: {{ order_id }}</p>
+   <p style="margin-top: 10px;"> Order Data: {{ order_time }}</p>
+   <p style="margin-top: 10px;"> User Name: {{ user_name }}</p>
+   <p style="margin-top: 10px;"> Company Name: {{ company_name }}</p>
+   <p style="margin-top: 10px;"> Part Name: {{ part_name }}</p>
+   <p style="margin-top: 10px;"> Part Parameter(s): </p>
    {% for argname, argvalue in parameterList %} 
        <div style="margin-top: 10px;">
-         {{argname}}: {{argvalue}} 
+         <p style="margin-top: 10px; margin-left: 50px;"> {{argname}}: {{argvalue}} </p>
        </div>
    {% endfor %}
 {% endblock %}
 
-{% block script %}
-{% endblock %}

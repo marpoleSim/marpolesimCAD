@@ -28,7 +28,7 @@ export function init(data){
     // ---
 
     // source
-    let vtpsrc = '/media/trial1/mCAD.vtp'
+    let vtpsrc = '/media/logo/mCAD.vtp'
     reader.setUrl(vtpsrc).then(() => {
         reader.loadData().then(() => {
 

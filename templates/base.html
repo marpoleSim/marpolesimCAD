@@ -10,18 +10,24 @@
   <body>
 
     {% block header %}{% endblock %}
-    {% block menu %}{% endblock %}
+    <div style="display: flex;">
+    <div style="flex: 1; background-color: #dddddd;"></div>
+    <div class="topnav" style="float: left; width: 60%;">
+      {% block menu %}{% endblock %}
+    </div>
+    <div style="flex: 1; background-color: #dddddd;"></div>
+    </div>
 
     <main>
       <section>
         <div class="row">
-          <div class="column-side" style="background-color:#aaa;">  <!-- column 1: input column -->
+          <div class="column-side" style="background-color:#ddd;">  <!-- column 1: input column -->
             {% block leftContent %}{% endblock %}
           </div> <!-- column 2: canvas column --> 
-          <div class="column-middle" style="background-color:#bbb;">
+          <div class="column-middle" style="background-color:#ddd;">
             {% block middleContent %}{% endblock %}
           </div>
-          <div class="column-side" style="background-color:#ccc;">
+          <div class="column-side" style="background-color:#ddd;">
             {% block rightContent %}{% endblock %}
           </div>
         </div>  <!-- end of row -->

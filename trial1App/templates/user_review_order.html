@@ -8,17 +8,15 @@
 {% endblock %}
 
 {% block menu %}
-<div class="topnav">
-   <a class="active" href="/home">Home</a>
-   <!-- <a href="#about">About</a> -->
-   <!-- <a href="#contact">Contact</a> -->
-   <div class="search-container"> 
+   <a href="/home">Home</a>
+   <a href="#about">About</a>
+   <a href="#contact">Contact</a>
+   <div class="button-container"> 
      <form action="{% url 'logout' %}" method="post">
        {% csrf_token %}
        <button type="submit">Log Out</button>
      </form>
    </div>
-</div>
 {% endblock %}
 
 {% block middleContent %}
