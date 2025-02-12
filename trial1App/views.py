@@ -30,6 +30,43 @@ def trial(request):
 
     return render(request, 'trial.html', data)
 
+def download_order(request):
+
+    """
+    if request.method == 'POST':
+       partName = request.POST.get('partList')
+       part = Part.objects.filter(partName = partName).values()[0] 
+       numberOfArgs = part['numberOfArgs']
+       argName=['dummy']*9
+       argValue=[0]*9
+       argState=['none']*9 
+       for i in range(numberOfArgs):
+          argName[i] = part['arg' + str(i) + 'Name'] 
+          argValue[i] = part['arg' + str(i) + 'Value']
+          argState[i] = 'block' 
+
+       argList = list(zip(argName, argValue, argState))
+
+       data = {'partname': partName, 'numberOfArgs': numberOfArgs, 'argList': argList}
+    """
+
+    user = request.user
+    company = CompanyInfo.objects.filter(user = user)[0]
+    orders = Order.objects.filter(company = company)
+    
+    orderIDList = []
+    orderPartNameList = []
+
+    for order in orders:
+        orderIDList.append( order.id+10000 )
+        orderPartNameList.append(order.part.partName)
+
+    orderList = list(zip(orderIDList, orderPartNameList))
+
+    data = {'orderList': orderList}
+
+    return render(request, 'download_order.html', data)
+
 def geomParameter(request):
 
     partName = request.POST.get('selectPart')

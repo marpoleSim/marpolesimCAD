@@ -12,7 +12,8 @@ export function init(data){
     // standard rendering code setup
     // ---
     vtkRenderScreen = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
-        container: document.querySelector('#vtkContainer'), background: [0.2, 0.3, 0.4] });
+        //container: document.querySelector('#vtkContainer'), background: [0.2, 0.3, 0.4] });
+        container: document.querySelector('#vtkContainer'), background: [1.0, 1.0, 1.0] });
     renderer = vtkRenderScreen.getRenderer();
     renderWindow = vtkRenderScreen.getRenderWindow();
       

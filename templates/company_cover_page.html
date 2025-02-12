@@ -20,6 +20,7 @@
 {% endblock %}
 
 {% block middleContent %}
+    <div style="display: flex; margin-top: 50px;" >
         <div class="card" style="flex: 1; margin: 10px;"> 
             <!-- <img src="https://via.placeholder.com/300" alt="Card Image"> -->
             <div class="card-content">
@@ -31,6 +32,18 @@
                 </form>
             </div>  
         </div>  
-
+        
+  <!--  <div class="card" style="flex: 1; margin: 10px;"> -->
+            <!-- <img src="https://via.placeholder.com/300" alt="Card Image"> -->
+     <!--   <div class="card-content">
+                <h3>Download</h3>
+                <p>Download client's order.</p>
+                <form class="" id="companyReviewOrder" method="post" action='download_order'>
+                {% csrf_token %}
+                   <input class='button' id='submitOrder' type="submit" value="download order">
+                </form>
+            </div>
+        </div> -->
+    </div>
 {% endblock %}
 

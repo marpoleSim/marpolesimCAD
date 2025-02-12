@@ -257,3 +257,60 @@ li.menu a:hover {
 .card button:hover {
     background-color: #0056b3;
 }
+
+/* select */
+select {
+    appearance: none; /* Removes default styling */
+    background-color: white;
+    border: 2px solid #a3a3a3;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Arrow customization using background */
+select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px; /* Space for arrow */
+}
+
+/* On hover */
+select:hover {
+    border-color: #646464;
+}
+
+/* input */
+input {
+    appearance: none; /* Removes default browser styling */
+    background-color: white;
+    border: 2px solid #a3a3a3;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* On hover */
+input:hover {
+    border-color: #646464;
+}
+
+/* On focus */
+input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+}
+
+
+/* On focus */
+select:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+}
+

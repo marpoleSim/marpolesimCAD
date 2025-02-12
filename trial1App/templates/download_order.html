@@ -22,7 +22,18 @@
  
         {% block leftContent %} 
           <div style="margin-left: 30px;">
-              <h3>Set Up {{partname}} Parameter(s)</h3>
+              <h3>Select an Order</h3>
+              <form class="" id="parameterForm" method="post">
+                {% csrf_token %}
+                  <!-- <input type="hidden" id="partname" name="partname" value="{{partname}}"> -->
+                  <select class="form-select" name="orderList" id="orderList" required autocomplete='off'>
+                      <option disabled selected value>Select an order ...</option>
+                      {% for orderId, partname in orderList %}
+                      <option value='{{orderId}}'>{{orderId}}: {{partname}}</option>
+                      {% endfor %}
+                  </select>
+              </form>
+              <!-- 
               <form class="" id="parameterForm" method="post">
                 {% csrf_token %}
                   <input type="hidden" id="partname" name="partname" value="{{partname}}">
@@ -35,6 +46,7 @@
                   <input class='button' id='argsubmit' type="submit" value="Submit" style="margin-top: 20px;">
                   <div id='status'></div>
               </form>
+              -->
           </div>
         {% endblock %}
         {% block middleContent %} 
@@ -59,6 +71,7 @@
             </form>
           </div>
           <hr>
+          <!-- 
           <div style="margin-left: 30px;">
               <h3>Submit Order</h3>
               <form class="" id="submitOrderForm" method="post" action='submit_order'>
@@ -72,10 +85,11 @@
                   <!-- </div> -->
                   {% endfor %}
 
-                    <input class='button' id='submitOrder' type="submit" value="Submit Order">
+                    <!-- <input class='button' id='submitOrder' type="submit" value="Submit Order"> -->
                     <div id='partNameMessage'></div>
               </form>
           </div>
+          -->
         {% endblock %}
   
       {% block script %}
