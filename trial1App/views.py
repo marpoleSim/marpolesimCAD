@@ -33,24 +33,6 @@ def trial(request):
 
 def download_order(request):
 
-    """
-    if request.method == 'POST':
-       partName = request.POST.get('partList')
-       part = Part.objects.filter(partName = partName).values()[0] 
-       numberOfArgs = part['numberOfArgs']
-       argName=['dummy']*9
-       argValue=[0]*9
-       argState=['none']*9 
-       for i in range(numberOfArgs):
-          argName[i] = part['arg' + str(i) + 'Name'] 
-          argValue[i] = part['arg' + str(i) + 'Value']
-          argState[i] = 'block' 
-
-       argList = list(zip(argName, argValue, argState))
-
-       data = {'partname': partName, 'numberOfArgs': numberOfArgs, 'argList': argList}
-    """
-
     user = request.user
     company = CompanyInfo.objects.filter(user = user)[0]
     orders = Order.objects.filter(company = company)
@@ -91,9 +73,7 @@ def modelling(request):
 
     if request.method == 'POST':
        partName = request.POST.get('partname')
-       #part = Part.objects.filter(partName = partName).values() 
-       #functionName = list(part)[0]['functionName']
-       #functionName = partName
+       orderId = request.POST.get('orderId')
        functionName = re.sub(r"\s+", "_", partName.strip()).lower()
        vtpRootPath = str(django_settings.MEDIA_ROOT) + '/trial1'
 
@@ -102,8 +82,8 @@ def modelling(request):
        for i in range(len(args)):
          args[i] = float(args[i])
 
-       flag = bp.buildPart(partName, functionName, args, vtpRootPath)
-       data = {'flag': flag, 'partName': partName,}
+       flag = bp.buildPart(orderId, partName, functionName, args, vtpRootPath)
+       data = {'flag': flag, 'partName': partName, }
        return JsonResponse(data)
 
 def savePart(request):
@@ -269,8 +249,9 @@ def ordered_part(request):
 
     if request.method == 'POST':
        #get order information
-       orderId = int(request.POST.get('selected')) - 10000
-       order = Order.objects.get(pk=orderId) 
+       orderId = request.POST.get('selected')
+       pk_orderId = int(request.POST.get('selected')) - 10000
+       order = Order.objects.get(pk=pk_orderId) 
        partname = order.part.partName
        numberOfArgs = order.part.numberOfArgs
        arg_names = [None]*9
@@ -282,13 +263,13 @@ def ordered_part(request):
            arg_value = 'arg' + str(i) + 'Value'
            arg_values[i] = getattr(order, arg_value)
 
-       data = {'partname': partname, 'numberOfArgs': numberOfArgs, 'arg_names': arg_names, 'arg_values': arg_values, }
+       data = {'partname': partname, 'orderId': orderId, 'numberOfArgs': numberOfArgs, 'arg_names': arg_names, 'arg_values': arg_values, }
 
     return JsonResponse(data)
 
 def downloadSTL(request):
 
-    filename = request.POST.get('partname') + '.stl'
+    filename = 'A' + request.POST.get('orderId') + '.stl'
     if request.method == 'POST':
        path = str(django_settings.MEDIA_ROOT) + '/trial1/stl/'
        file_path = path + filename

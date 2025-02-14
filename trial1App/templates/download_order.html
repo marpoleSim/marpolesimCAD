@@ -39,6 +39,7 @@
               <form class="" id="orderParameterForm" method="post">
                 {% csrf_token %}
                   <input type="hidden" id="partname" name="partname" value="">
+                  <input type="hidden" id="orderId" name="orderId" value="">
                   {% for i in '012345678'|make_list %}
                   <div id='arg{{ forloop.counter }}' style="margin-top: 10px; display: none;">
                     <label id="argname{{ forloop.counter}}" for="argname{{ forloop.counter }}"> dummy: </label>

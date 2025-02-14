@@ -8,14 +8,14 @@ def savePartVtp(obj, partName, vtpPath):
 
     return filename
 
-def savePartStl(obj, partName, stlPath):
+def savePartStl(obj, orderId, stlPath):
 
-    filename = str(stlPath) + '/stl/' + partName + ".stl"
+    filename = str(stlPath) + '/stl/A' + orderId + ".stl"
     exporters.export(obj, filename)
 
     return filename
 
-def buildPart(partName, functionName, arg, mediaPath):
+def buildPart(orderId, partName, functionName, arg, mediaPath):
 
     # function name is used here for select function
     flag = True
@@ -27,7 +27,8 @@ def buildPart(partName, functionName, arg, mediaPath):
     # all model should be saved in vtp format for review
     if flag:
         savePartVtp(obj, partName, mediaPath)
-        savePartStl(obj, partName, mediaPath)
+        if orderId != None:
+            savePartStl(obj, orderId, mediaPath)
 
     return flag 
 

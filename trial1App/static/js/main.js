@@ -173,7 +173,7 @@ $(function () {
    $('#orderParameterForm').on('submit', function (event) {
       event.preventDefault();
 
-     $.each ( $('#orderParameterForm input').serializeArray(), function ( i, obj ) {
+      $.each ( $('#orderParameterForm input').serializeArray(), function ( i, obj ) {
           $('<input type="hidden">').prop( obj ).appendTo( $('#downloadForm') );
       } );
 

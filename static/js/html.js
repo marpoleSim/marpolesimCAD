@@ -30,6 +30,7 @@ export function showOrderParameter(data){
     $('#argsubmit').show();
 
     document.getElementById('partname').value = data.partname;
+    document.getElementById('orderId').value = data.orderId;
 
     let id;
     for( let i = 0; i < 9; i++) {
