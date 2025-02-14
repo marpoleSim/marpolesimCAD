@@ -10,7 +10,7 @@ def savePartVtp(obj, partName, vtpPath):
 
 def savePartStl(obj, partName, stlPath):
 
-    filename = str(stlPath) + '/' + partName + ".stl"
+    filename = str(stlPath) + '/stl/' + partName + ".stl"
     exporters.export(obj, filename)
 
     return filename
@@ -27,7 +27,7 @@ def buildPart(partName, functionName, arg, mediaPath):
     # all model should be saved in vtp format for review
     if flag:
         savePartVtp(obj, partName, mediaPath)
-        #savePartStl(obj, partName, mediaPath)
+        savePartStl(obj, partName, mediaPath)
 
     return flag 
 

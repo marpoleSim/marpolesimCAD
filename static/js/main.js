@@ -1,5 +1,5 @@
 import { init, display, zoomAll, } from '/static/js/vtkFunc.js';
-import { showParameter, } from '/static/js/html.js';
+import { showParameter, showOrderParameter } from '/static/js/html.js';
 
 $(function () {
 
@@ -137,6 +137,86 @@ $(function () {
       }
       
       document.getElementById("submitOrderForm").submit();
+   });
+
+   // respond to selecting order 
+   $("#orderList").change(function () {
+      event.preventDefault();
+
+      // enabling and disabling buttons
+      //$('#select').attr('disabled','disabled');
+      //$('#savePart').attr('disabled','disabled');
+      //$('#argsubmit').removeAttr('disabled');
+      let selectedValue = $(this).val();
+      let csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+      $.ajax({
+         url: 'ordered_part',
+         type: 'POST',
+         headers:{
+                  "X-CSRFToken": csrfToken
+               },
+         data: {
+               //$(this).serialize(),
+               selected: selectedValue,
+                _csrf: csrfToken  // CSRF token included in request
+               },
+         dataType: 'json',
+         success: function (response) {
+            // display parameter input panel
+            showOrderParameter(response)
+         }
+      });
+   });
+
+   // respond to geometry modification
+   $('#orderParameterForm').on('submit', function (event) {
+      event.preventDefault();
+
+     $.each ( $('#orderParameterForm input').serializeArray(), function ( i, obj ) {
+          $('<input type="hidden">').prop( obj ).appendTo( $('#downloadForm') );
+      } );
+
+      $("input[name='argvalue']").attr("disabled", false);
+
+      // display status
+      document.getElementById('status').innerHTML = '<p>status: proceeding ... </p>';
+      $('#status').show();
+
+      $.ajax({
+         url: 'modelling',
+         type: 'POST',
+         data: $(this).serialize(),
+         dataType: 'json',
+         success: function (response) {
+             // display proceeding status
+             if (response.flag) {
+                $("input[name='argvalue']").attr("disabled", true);
+
+                var partname = response.partName;
+
+                let submitOrderButton;
+                if(document.getElementById('downloadSTL').disabled){
+                   submitOrderButton = true;
+                } else {
+                   submitOrderButton = false;
+                }
+
+                var data = {'partname': partname, 'submitOrderButton': submitOrderButton, }
+
+                display(data);
+
+                $('#downloadSTL').removeAttr('disabled');
+
+                document.getElementById('status').innerHTML = '<p>status: complete </p>';
+
+             } else {
+
+                document.getElementById('status').innerHTML = '<p>status: failed to render part </p>';
+
+             }
+         }
+      });
    });
 
 });

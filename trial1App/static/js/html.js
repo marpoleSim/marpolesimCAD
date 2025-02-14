@@ -8,9 +8,6 @@ export function showParameter(data){
     $('#parameterForm').show();
     $('#status').hide();
 
-    var html1='<h4> (' + capitalizeFirstLetter(data.functionName) +')</h4>' ;
-    document.getElementById('parameterTitle').innerHTML = html1;
-
     let id;
     for( let i = 0; i < 9; i++) {
         if (i<data.numberOfArgs){
@@ -23,4 +20,27 @@ export function showParameter(data){
             $('#arg' + id).hide();
         }
     } 
+}
+
+export function showOrderParameter(data){
+
+    //$('#parameterTitle').show();
+    //$('#parameterForm').show();
+    //$('#status').hide();
+    $('#argsubmit').show();
+
+    document.getElementById('partname').value = data.partname;
+
+    let id;
+    for( let i = 0; i < 9; i++) {
+        if (i<data.numberOfArgs){
+            id = (i+1).toString();
+            document.getElementById('argname' + id).innerHTML = data.arg_names[i] + ': ';
+            document.getElementById('argvalue' + id).value = data.arg_values[i].toString();
+            $('#arg' + id).show();
+        } else {
+            id = (i+1).toString();
+            $('#arg' + id).hide();
+        }
+    }
 }

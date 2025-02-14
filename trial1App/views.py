@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.conf import settings as django_settings
 from django.http import FileResponse
 from django.forms.models import model_to_dict
+from django.http import FileResponse
 import re
 
 import trial1App.backend.buildPart as bp 
@@ -76,7 +77,6 @@ def geomParameter(request):
     #functionName = partDict['functionName']
     #functionName = partName.strip().replace(" ","_")
     functionName = re.sub(r"\s+", "_", partName.strip()).lower()
-    print(functionName)
   
     argName=[None]*numberOfArgs 
     argValue=[None]*numberOfArgs 
@@ -264,3 +264,36 @@ def company_review_order(request):
     orderList = list(zip(orderIDList, orderPartNameList, orderUserList, orderUserEmailList, orderDateList,))    
  
     return render(request, 'company_review_order.html', {'orderList': orderList} )
+
+def ordered_part(request):
+
+    if request.method == 'POST':
+       #get order information
+       orderId = int(request.POST.get('selected')) - 10000
+       order = Order.objects.get(pk=orderId) 
+       partname = order.part.partName
+       numberOfArgs = order.part.numberOfArgs
+       arg_names = [None]*9
+       for i in range(9):
+           arg_name = 'arg' + str(i) + 'Name'
+           arg_names[i] = getattr(order.part, arg_name)
+       arg_values = [None]*9
+       for i in range(9):
+           arg_value = 'arg' + str(i) + 'Value'
+           arg_values[i] = getattr(order, arg_value)
+
+       data = {'partname': partname, 'numberOfArgs': numberOfArgs, 'arg_names': arg_names, 'arg_values': arg_values, }
+
+    return JsonResponse(data)
+
+def downloadSTL(request):
+
+    filename = request.POST.get('partname') + '.stl'
+    if request.method == 'POST':
+       path = str(django_settings.MEDIA_ROOT) + '/trial1/stl/'
+       file_path = path + filename
+       #return FileResponse(open(file_path, "rb"), as_attachment=True)
+       response = FileResponse(open(file_path, "rb"))
+       response["Content-Disposition"] = 'attachment; filename=' + filename
+       
+    return response

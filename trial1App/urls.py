@@ -12,4 +12,6 @@ urlpatterns = [
 	path('user_review_order', views.user_review_order, name='user_review_order'), 
 	path('company_review_order', views.company_review_order, name='company_review_order'), 
 	path('download_order', views.download_order, name='download_order'), 
+	path('ordered_part', views.ordered_part, name='ordered_part'), 
+	path('downloadSTL', views.downloadSTL, name='downloadSTL'), 
 ]
