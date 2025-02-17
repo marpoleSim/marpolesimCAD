@@ -314,3 +314,45 @@ select:focus {
     box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
 }
 
+/* cover page responsible image */
+.containerCover {
+    display: flex;
+    justify-content: center;
+}
+.columnCover {
+    width: 100%; /* Adjust column width as needed */
+    /* max-width: 600px; */ /* Optional: Limit max width */
+}
+.columnCover img {
+    width: 100%;
+    height: auto; /* Maintains aspect ratio */
+    display: block;
+}
+
+/* table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: left;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/*tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}*/
+
